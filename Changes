@@ -1,4 +1,6 @@
 Revision history for Dist-Zilla-Plugin-ImportToSubversion
 
 {{$NEXT}}
+
+1.100770  2010-03-18 12:27:39 America/New_York
     initial release using Dist::Zilla
