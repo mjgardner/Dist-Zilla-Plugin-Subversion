@@ -115,9 +115,8 @@ sub release {
     my $dists_url = $self->svn_dists_url->clone->canonical();
     $dists_url->path_segments( $dists_url->path_segments(),
         $archive->basename() );
-    my $dist_name = "$archive";
-    $self->_context->import( $dist_name, "$dists_url", 1 );
-    $self->log("Imported $dist_name to $dists_url");
+    $self->_context->import( "$archive", "$dists_url", 1 );
+    $self->log("Imported $archive to $dists_url");
 
     my $dist_dir = getcwd();
     my $tags_url = $self->svn_tags_url->clone->canonical();
