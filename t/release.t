@@ -20,13 +20,13 @@ use Readonly;
 # $Author$
 
 our $MODULE;
-Readonly my $TESTS => 7;
+Readonly my $TESTS => 6;
 
 BEGIN { Readonly our $MODULE => 'Dist::Zilla::Plugin::ImportToSubversion' }
 BEGIN { use_ok($MODULE) }
 
 isa_ok( $MODULE, 'Moose::Object', $MODULE );
-for (qw(svn_user svn_password svn_dists_url svn_tags_url)) {
+for (qw(svn_user svn_password svn_url)) {
     has_attribute_ok( $MODULE, $ARG, "$MODULE has the $ARG attribute" );
 }
 can_ok( $MODULE, qw(release) );
@@ -61,7 +61,7 @@ $test_client->import( "$wc", "$repo_uri", 0 );
 dir("$wc")->rmtree();
 $test_client->checkout( "$repo_uri", "$wc", 'HEAD', 1 );
 
-my %plugin_test = ( wc => [], ini => ["svn_dists_url = $repo_uri"] );
+my %plugin_test = ( wc => [], ini => ["svn_url = $repo_uri"] );
 eval { require Dist::Zilla::Plugin::Repository; 1 }
     and $plugin_test{repository} = ['[Repository]'];
 

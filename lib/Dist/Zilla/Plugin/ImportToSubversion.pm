@@ -36,26 +36,33 @@ sub _from_release_config {
     return $app->config_for('Dist::Zilla::App::Command::release')->{$key};
 }
 
-for my $attr_base (qw(dists tags)) {
-    has "svn_$attr_base"
-        . '_url' => (
-        is      => 'ro',
-        isa     => Uri,
-        coerce  => 1,
-        lazy    => 1,
-        default => sub { $ARG[0]->_make_default_url($attr_base) },
-        );
-}
+has "svn_url" => (
+    is         => 'ro',
+    isa        => Uri,
+    coerce     => 1,
+    lazy_build => 1,
+);
 
-sub _make_default_url {
-    my ( $self, $url_type ) = @ARG;
+sub _build_svn_url {
+    my ( $self ) = @ARG;
 
-    my $url = $self->_from_release_config( "svn_$url_type" . 'url' );
+    my $url = $self->_from_release_config('svn_url');
     return URI->new($url) if $url;
 
     if ( $url = $self->zilla->distmeta->{resources}{repository} ) {
         $url = URI->new($url);
-        $url->path_segments( $url->path_segments(), $url_type );
+        my @segments = $url->path_segments();
+        my %url_offset = (
+            trunk    => -1,
+            branches => -2,
+        );
+
+        while ( my ( $segment, $offset ) = each %url_offset ) {
+            if ( $segments[$offset] eq $segment ) {
+                $url->path_segments( @segments[ 0 .. $#segments + $offset ] );
+                return $url;
+            }
+        }
         return $url;
     }
 
@@ -72,7 +79,7 @@ sub _make_default_url {
 
     my @segments = $url->path_segments();
     $url->path_segments(
-        @segments[ 0 .. $#segments - !$url->eq($repos_root) ], $url_type );
+        @segments[ 0 .. $#segments - !$url->eq($repos_root) ] );
     return $url;
 }
 
@@ -112,16 +119,16 @@ sub release {
     my ( $self, $archive ) = @ARG;
     my %meta = %{ $self->zilla->distmeta() };
 
-    my $dists_url = $self->svn_dists_url->clone->canonical();
+    my $dists_url = $self->svn_url->clone->canonical();
     $dists_url->path_segments( $dists_url->path_segments(),
-        $archive->basename() );
+        'dists', $archive->basename() );
     $self->_context->import( "$archive", "$dists_url", 1 );
     $self->log("Imported $archive to $dists_url");
 
     my $dist_dir = getcwd();
-    my $tags_url = $self->svn_tags_url->clone->canonical();
+    my $tags_url = $self->svn_url->clone->canonical();
     $tags_url->path_segments( $tags_url->path_segments(),
-        join '-', @meta{qw(name version)} );
+        'tags', join '-', @meta{qw(name version)} );
     $self->_context->import( $dist_dir, "$tags_url", 1 );
     $self->log("Imported $dist_dir to $tags_url");
 }
@@ -150,8 +157,7 @@ This plugin looks for configuration in your C<dist.ini>:
   [ImportToSubversion]
   svn_user      = YOUR-SVN-USERID
   svn_password  = YOUR-SVN-PASSWORD
-  svn_dists_url = http://svn.example.com/path/to/svn/dists/directory
-  svn_tags_url  = http://svn.example.com/path/to/svn/tags/directory
+  svn_url = http://svn.example.com/path/to/svn/directory
 
 If any of these are not provided, they are taken from your cached Subversion
 credentials, or in the case of C<svn_url>, from the Repository resource
@@ -173,17 +179,11 @@ distribution's working copy.
 Your Subversion password.  Defaults to the cached credentials for your
 distribution's working copy.
 
-=attr svn_dists_url
+=attr svn_url
 
-URL for the directory receiving your distribution's tarball.  Defaults to
-the "dists" directory within the parent directory of your distribution's
-repository location.
-
-=attr svn_tags_url
-
-URL for the tags directory receiving your distribution.  Defaults to
-the "tags" directory within the parent directory of your distribution's
-repository location.  The actual tag will be your distribution name, followed
-by a hyphen, followed by your distribution's version.
+URL for the directory receiving your distribution.  Defaults to your
+distribution's repository location.  A tarball of your distribution will be
+imported into the "dists" subdirectory, and your entire distribution will be
+imported into the "tags" subdirectory.
 
 =cut
