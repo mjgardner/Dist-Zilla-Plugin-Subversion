@@ -30,14 +30,21 @@ for my $attr (qw(svn_user svn_password)) {
     );
 }
 
+sub _from_release_config {
+    my ( $self, $key ) = @ARG;
+    return unless my $app = $self->zilla->dzil_app();
+    return $app->config_for('Dist::Zilla::App::Command::release')->{$key};
+}
+
 for my $attr_base (qw(dists tags)) {
-    has "svn_$attr_base" . '_url' => (
+    has "svn_$attr_base"
+        . '_url' => (
         is      => 'ro',
         isa     => Uri,
         coerce  => 1,
         lazy    => 1,
         default => sub { $ARG[0]->_make_default_url($attr_base) },
-    );
+        );
 }
 
 sub _make_default_url {
@@ -67,12 +74,6 @@ sub _make_default_url {
     $url->path_segments(
         @segments[ 0 .. $#segments - !$url->eq($repos_root) ], $url_type );
     return $url;
-}
-
-sub _from_release_config {
-    my ( $self, $key ) = @ARG;
-    return unless my $app = $self->zilla->dzil_app();
-    return $app->config_for('Dist::Zilla::App::Command::release')->{$key};
 }
 
 has '_context' => (
