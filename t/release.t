@@ -46,7 +46,7 @@ author   = test user
 abstract = test release
 license  = BSD
 version  = 1.{$version}
-copyright_holder = GSI Commerce
+copyright_holder = test holder
 
 [ImportToSubversion]
 { join "\n", @plugins }
