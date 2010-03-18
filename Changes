@@ -1,6 +1,6 @@
 Revision history for Dist-Zilla-Plugin-ImportToSubversion
 
 {{$NEXT}}
-
+    fix determination of tags and dists repository directories
 1.100770  2010-03-18 12:27:39 America/New_York
     initial release using Dist::Zilla
