@@ -30,15 +30,15 @@ for my $attr (qw(svn_user svn_password)) {
     );
 }
 
-has [qw(svn_dists_url svn_tags_url)] => (
-    is         => 'ro',
-    isa        => Uri,
-    coerce     => 1,
-    lazy_build => 1,
-);
-
-sub _build_svn_dists_url { $ARG[0]->_make_default_url('dists') }
-sub _build_svn_tags_url  { $ARG[0]->_make_default_url('tags') }
+for my $attr_base (qw(dists tags)) {
+    has "svn_$attr_base" . '_url' => (
+        is      => 'ro',
+        isa     => Uri,
+        coerce  => 1,
+        lazy    => 1,
+        default => sub { $ARG[0]->_make_default_url($attr_base) },
+    );
+}
 
 sub _make_default_url {
     my ( $self, $url_type ) = @ARG;
