@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ImportToSubversion
 
 {{$NEXT}}
+
+1.100770  2010-03-18 15:00:44 America/New_York
     change license & copyright to Perl and me, respectively
 1.100770  2010-03-18 13:59:47 America/New_York
     fix determination of tags and dists repository directories
