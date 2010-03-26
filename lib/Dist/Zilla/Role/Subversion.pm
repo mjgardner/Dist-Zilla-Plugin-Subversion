@@ -39,7 +39,10 @@ for my $attr (qw(svn_user svn_password)) {
         isa       => 'Str',
         lazy      => 1,
         predicate => "_has_$attr",
-        default   => sub { $ARG[0]->_from_app_config($attr) },
+        default   => sub {
+            return $ARG[0]->zilla->dzil_app->config_for(
+                'Dist::Zilla::App::Command::release')->{$attr};
+        },
     );
 }
 
@@ -94,12 +97,6 @@ sub _build__base_url {
     $self->_svn->info( getcwd(), undef, undef,
         sub { $url = URI->new( $ARG[1]->repos_root_URL() ) }, 0 );
     return $url;
-}
-
-sub _from_app_config {
-    my ( $self, $key ) = @ARG;
-    return unless my $app = $self->zilla->dzil_app();
-    return $app->config_for('Dist::Zilla::App::Command::release')->{$key};
 }
 
 has '_svn' => (
