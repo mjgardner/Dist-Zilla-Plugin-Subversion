@@ -24,12 +24,9 @@ my $tests = 12;
 
 BEGIN {
     Readonly our %MODULES => (
-        'Dist::Zilla::Plugin::Subversion::Tag'         => 'after_release',
         'Dist::Zilla::Plugin::Subversion::ReleaseDist' => 'release',
+        'Dist::Zilla::Plugin::Subversion::Tag'         => 'after_release',
     );
-}
-
-BEGIN {
     for ( keys %MODULES ) { use_ok($ARG) }
 }
 
@@ -59,7 +56,9 @@ license  = BSD
 version  = 1.{$version}
 copyright_holder = test holder
 
+{$repository_plugin}
 [Subversion::ReleaseDist]
+{ join "\n", @ini_lines }
 [Subversion::Tag]
 { join "\n", @ini_lines }
 END_INI
@@ -87,14 +86,21 @@ for my $branch (qw(trunk branches/test_branch)) {
     );
     $plugin_test{full_ini} = \@plugin_test{qw(working_only tag_only)};
     eval { require Dist::Zilla::Plugin::Repository; 1 }
-        and $plugin_test{repository} = ['[Repository]'];
+        and $plugin_test{repository} = [];
 
     my $old_dir = getcwd();
     chdir("$wc");
     while ( my ( $test_name, $plugins_ref ) = each %plugin_test ) {
         my $ini_fh = file( "$wc", 'dist.ini' )->openw();
         print $ini_fh $ini_template->fill_in(
-            hash => { ini_lines => $plugins_ref, version => $version++ } );
+            hash => {
+                ini_lines         => $plugins_ref,
+                version           => $version++,
+                repository_plugin => exists $plugin_test{repository}
+                ? '[Repository]'
+                : q{},
+            }
+        );
         close $ini_fh;
         my $zilla = Dist::Zilla->from_config();
         lives_ok( sub { $zilla->release() }, $test_name );
@@ -107,7 +113,7 @@ for my $branch (qw(trunk branches/test_branch)) {
                 ok( keys %{
                         $test_client->ls( "$repo_uri/dists/$dist_name.tar.gz",
                             'HEAD', 0 )
-                        }
+                        },
 
                 );
             },
@@ -119,7 +125,7 @@ for my $branch (qw(trunk branches/test_branch)) {
                 ok( keys %{
                         $test_client->ls( "$repo_uri/tags/$dist_name", 'HEAD',
                             0 )
-                        }
+                        },
                 );
             },
             "$test_name tagged"
