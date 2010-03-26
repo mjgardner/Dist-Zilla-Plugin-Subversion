@@ -20,7 +20,7 @@ use Readonly;
 # $Author$
 
 our $MODULE;
-Readonly my $TESTS => 7;
+my $tests = 7;
 
 BEGIN { Readonly our $MODULE => 'Dist::Zilla::Plugin::Subversion::Tag' }
 BEGIN { use_ok($MODULE) }
@@ -57,32 +57,40 @@ END_INI
 my $fh = $ini_file->openw();
 print $fh $ini_template->fill_in();
 close $fh;
-dir( "$wc", 'tags' )->mkpath();
+for (qw(tags branches)) { dir( "$wc", $ARG )->mkpath() }
 
 my $test_client = SVN::Client->new();
 $test_client->import( "$wc", "$repo_uri", 0 );
-for (qw(trunk tags)) { dir( "$wc", $ARG )->rmtree() }
+for (qw(trunk tags branches)) { dir( "$wc", $ARG )->rmtree() }
+$test_client->copy( "$repo_uri/trunk", 'HEAD',
+    "$repo_uri/branches/test_branch" );
 $test_client->checkout( "$repo_uri/trunk", "$wc", 'HEAD', 1 );
 
-my %plugin_test = (
-    from_checkout => [],
-    working_only  => ["working_url = $repo_uri/trunk"],
-    tag_only      => ["tag_url     = $repo_uri/tags"],
-);
-$plugin_test{full_ini} = \@plugin_test{qw(working_only tag_only)};
-eval { require Dist::Zilla::Plugin::Repository; 1 }
-    and $plugin_test{repository} = ['[Repository]'];
-
-my $old_dir = getcwd();
-chdir("$wc");
 my $version = 0;
-while ( my ( $test_name, $plugins_ref ) = each %plugin_test ) {
-    my $ini_fh = file( "$wc", 'dist.ini' )->openw();
-    print $ini_fh $ini_template->fill_in(
-        hash => { ini_lines => $plugins_ref, version => $version++ } );
-    close $ini_fh;
-    my $zilla = Dist::Zilla->from_config();
-    lives_ok( sub { $zilla->release() }, $test_name );
+for my $branch (qw(trunk branches/test_branch)) {
+    $test_client->switch( "$wc", "$repo_uri/$branch", 'HEAD', 1 );
+
+    my %plugin_test = (
+        from_checkout => [],
+        working_only  => ["working_url = $repo_uri/$branch"],
+        tag_only      => ["tag_url     = $repo_uri/tags"],
+    );
+    $plugin_test{full_ini} = \@plugin_test{qw(working_only tag_only)};
+    eval { require Dist::Zilla::Plugin::Repository; 1 }
+        and $plugin_test{repository} = ['[Repository]'];
+
+    my $old_dir = getcwd();
+    chdir("$wc");
+    while ( my ( $test_name, $plugins_ref ) = each %plugin_test ) {
+        my $ini_fh = file( "$wc", 'dist.ini' )->openw();
+        print $ini_fh $ini_template->fill_in(
+            hash => { ini_lines => $plugins_ref, version => $version++ } );
+        close $ini_fh;
+        my $zilla = Dist::Zilla->from_config();
+        lives_ok( sub { $zilla->release() }, $test_name );
+    }
+    chdir $old_dir;
+    $tests += keys %plugin_test;
 }
-chdir $old_dir;
-done_testing( $TESTS + keys %plugin_test );
+
+done_testing($tests);
