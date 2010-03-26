@@ -13,7 +13,6 @@ with 'Dist::Zilla::Role::Plugin';
 
 use Cwd;
 use English qw(-no_match_vars);
-use Modern::Perl;
 use MooseX::Types::URI 'Uri';
 use Path::Class qw(dir file);
 use Readonly;

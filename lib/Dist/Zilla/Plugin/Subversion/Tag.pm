@@ -14,7 +14,6 @@ with 'Dist::Zilla::Role::AfterRelease';
 
 use Cwd;
 use English qw(-no_match_vars);
-use Modern::Perl;
 use Moose::Util::TypeConstraints 'find_type_constraint';
 use MooseX::Types::URI 'Uri';
 use SVN::Client;
