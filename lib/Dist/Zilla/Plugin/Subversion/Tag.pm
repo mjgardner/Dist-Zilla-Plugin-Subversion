@@ -14,9 +14,7 @@ with 'Dist::Zilla::Role::AfterRelease';
 
 use Cwd;
 use English qw(-no_match_vars);
-use Moose::Util::TypeConstraints 'find_type_constraint';
 use MooseX::Types::URI 'Uri';
-use SVN::Client;
 use namespace::autoclean;
 
 =attr tag_url

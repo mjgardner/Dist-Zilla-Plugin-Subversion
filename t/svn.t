@@ -49,7 +49,7 @@ license  = BSD
 version  = 1.{$version}
 copyright_holder = test holder
 
-[FakeRelease]
+[Subversion::ReleaseDist]
 [Subversion::Tag]
 { join "\n", @ini_lines }
 END_INI
