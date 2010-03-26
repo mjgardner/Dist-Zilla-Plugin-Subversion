@@ -1,7 +1,7 @@
 Revision history for Dist-Zilla-Plugin-Subversion
 
 {{$NEXT}}
-
+    refactor to a main role and separate Releaser and AfterRelease plugins
 1.100770  2010-03-18 15:00:44 America/New_York
     change license & copyright to Perl and me, respectively
 1.100770  2010-03-18 13:59:47 America/New_York
