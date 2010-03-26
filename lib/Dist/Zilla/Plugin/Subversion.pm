@@ -2,6 +2,12 @@ package Dist::Zilla::Plugin::Subversion;
 
 # ABSTRACT: update your Subversion repository after release
 
+# last changed on:
+# $Date$
+# $Revision$
+# $HeadURL$
+# $Author$
+
 use Dist::Zilla;
 1;
 
@@ -15,8 +21,8 @@ their work. The following plugins are provided in this distribution:
 
 =over
 
-=item * L<Dist::Zilla::Plugin::Subversion::Tag>
-
 =item * L<Dist::Zilla::Plugin::Subversion::ReleaseDist>
+
+=item * L<Dist::Zilla::Plugin::Subversion::Tag>
 
 =back
