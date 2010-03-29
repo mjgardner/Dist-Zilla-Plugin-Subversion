@@ -120,7 +120,7 @@ sub _build__svn {
 
     my $ctx_ref = SVN::Client->new(
         auth    => \@auth_baton,
-        log_msg => sub { ${ $ARG[0] } = "[__PACKAGE__]" },
+        log_msg => sub { ${ $ARG[0] } = '[' . __PACKAGE__ . ']' },
         notify  => $self->_make_notify_callback(),
     );
     return $ctx_ref;
