@@ -2,12 +2,6 @@ package Dist::Zilla::Plugin::Subversion::ReleaseDist;
 
 # ABSTRACT: releases a distribution's tarball to Subversion
 
-# last changed on:
-# $Date$
-# $Revision$
-# $HeadURL$
-# $Author$
-
 use Moose;
 with 'Dist::Zilla::Role::Subversion';
 with 'Dist::Zilla::Role::Releaser';

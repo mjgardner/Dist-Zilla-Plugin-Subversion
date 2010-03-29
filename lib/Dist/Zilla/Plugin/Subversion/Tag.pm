@@ -2,12 +2,6 @@ package Dist::Zilla::Plugin::Subversion::Tag;
 
 # ABSTRACT: tags a distribution in Subversion
 
-# last changed on:
-# $Date$
-# $Revision$
-# $HeadURL$
-# $Author$
-
 use Moose;
 with 'Dist::Zilla::Role::Subversion';
 with 'Dist::Zilla::Role::AfterRelease';

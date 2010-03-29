@@ -13,12 +13,6 @@ use Test::Moose;
 use Text::Template;
 use Readonly;
 
-# last changed on:
-# $Date$
-# $Revision$
-# $HeadURL$
-# $Author$
-
 our %MODULES;
 my $tests = 12;
 

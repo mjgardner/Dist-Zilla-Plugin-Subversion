@@ -2,12 +2,6 @@ package Dist::Zilla::Role::Subversion;
 
 # ABSTRACT: does Subversion actions for a distribution
 
-# last changed on:
-# $Date$
-# $Revision$
-# $HeadURL$
-# $Author$
-
 use Moose::Role;
 with 'Dist::Zilla::Role::Plugin';
 

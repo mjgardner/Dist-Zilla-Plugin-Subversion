@@ -2,12 +2,6 @@ package Dist::Zilla::Plugin::Subversion;
 
 # ABSTRACT: update your Subversion repository after release
 
-# last changed on:
-# $Date$
-# $Revision$
-# $HeadURL$
-# $Author$
-
 use Dist::Zilla;
 1;
 
