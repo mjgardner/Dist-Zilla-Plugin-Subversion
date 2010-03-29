@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Subversion
 
 {{$NEXT}}
+
+1.100880  2010-03-29 14:09:57 America/New_York
     refactor to a main role and separate Releaser and AfterRelease plugins
     migrate to GitHub so others can contribute
 1.100770  2010-03-18 15:00:44 America/New_York
