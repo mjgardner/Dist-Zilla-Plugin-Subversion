@@ -57,23 +57,22 @@ sub after_release {
     $self->log("Tagging $working_url as $tag_url");
 
     if ( my $commit_info = $self->_svn->commit( getcwd(), 0 ) ) {
-        $self->log( $commit_info->author()
-                . " committed working copy on "
-                . $commit_info->date() );
+        $self->_log_commit_info( $commit_info,
+            "committed working copy to $working_url" );
         if ( $commit_info
             = $self->_svn->copy( "$working_url", 'HEAD', "$tag_url" ) )
         {
-            $self->log( $commit_info->author()
-                    . " tagged $working_url as $tag_url on "
-                    . $commit_info->date() );
+            $self->_log_commit_info( $commit_info,
+                "tagged $working_url as $tag_url" );
             return;
         }
     }
 
     $self->log_fatal("Failed tag of $working_url as $tag_url");
+    return;
 }
 
-__PACKAGE__->meta->make_immutable;
+__PACKAGE__->meta->make_immutable();
 no Moose;
 1;
 

@@ -55,16 +55,16 @@ sub release {
 
     if ( my $commit_info = $self->_svn->import( "$archive", "$dist_url", 0 ) )
     {
-        $self->log( $commit_info->author()
-                . " imported $archive as $dist_url on "
-                . $commit_info->date() );
+        $self->_log_commit_info( $commit_info,
+            "imported $archive as $dist_url revision" );
         return;
     }
 
     $self->log_fatal("Failed import of $archive as $dist_url");
+    return;
 }
 
-__PACKAGE__->meta->make_immutable;
+__PACKAGE__->meta->make_immutable();
 no Moose;
 1;
 

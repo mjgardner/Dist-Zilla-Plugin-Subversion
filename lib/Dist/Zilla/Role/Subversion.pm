@@ -165,6 +165,15 @@ sub _codes_to_hash {
         keys %{$package};
 }
 
+sub _log_commit_info {
+    my ( $self, $info, $message ) = @ARG;
+
+    $self->log(
+        join q{ }, $info->author(), $message, $info->revision(),
+        'on',      $info->date(),
+    );
+}
+
 no Moose::Role;
 1;
 
