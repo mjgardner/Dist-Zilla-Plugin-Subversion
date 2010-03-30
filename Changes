@@ -1,7 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Subversion
 
 {{$NEXT}}
-
+    fix: use actual plugin called when committing to Subversion
+    fix: change maintainer email address to @cpan.org
 1.100880  2010-03-29 14:09:57 America/New_York
     refactor to a main role and separate Releaser and AfterRelease plugins
     migrate to GitHub so others can contribute
