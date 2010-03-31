@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Subversion
 
 {{$NEXT}}
+
+1.100900  2010-03-31 13:52:03 America/New_York
     Dist::Zilla 2 changes:
         Don't get Subversion username/password from global DZ config, as the
         interface is still unstable.
