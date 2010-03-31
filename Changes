@@ -1,16 +1,19 @@
 Revision history for Dist-Zilla-Plugin-Subversion
 
 {{$NEXT}}
-
+    Dist::Zilla 2 changes:
+        Don't get Subversion username/password from global DZ config, as the
+        interface is still unstable.
+        Update dist.ini to Dist::Zilla 2 plugin names.
 1.100890  2010-03-30 11:16:10 America/New_York
     fix: use actual plugin called when committing to Subversion
     fix: change maintainer email address to @cpan.org
 1.100880  2010-03-29 14:09:57 America/New_York
-    refactor to a main role and separate Releaser and AfterRelease plugins
-    migrate to GitHub so others can contribute
+    Refactor to a main role and separate Releaser and AfterRelease plugins.
+    Migrate to GitHub so others can contribute.
 1.100770  2010-03-18 15:00:44 America/New_York
-    change license & copyright to Perl and me, respectively
+    Change license & copyright to Perl and me, respectively.
 1.100770  2010-03-18 13:59:47 America/New_York
-    fix determination of tags and dists repository directories
+    fix: determination of tags and dists repository directories
 1.100770  2010-03-18 12:27:39 America/New_York
-    initial release using Dist::Zilla
+    Initial release using Dist::Zilla.

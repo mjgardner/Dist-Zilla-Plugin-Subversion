@@ -31,12 +31,7 @@ for my $attr (qw(svn_user svn_password)) {
     has $attr => (
         is        => 'ro',
         isa       => 'Str',
-        lazy      => 1,
         predicate => "_has_$attr",
-        default   => sub {
-            return $ARG[0]->zilla->dzil_app->config_for(
-                'Dist::Zilla::App::Command::release')->{$attr};
-        },
     );
 }
 
