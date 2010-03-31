@@ -11,6 +11,8 @@ use English qw(-no_match_vars);
 use MooseX::Types::URI 'Uri';
 use namespace::autoclean;
 
+=encoding utf8
+
 =attr tag_url
 
 URL for the directory receiving tags for your distribution.  During release
@@ -47,7 +49,7 @@ sub after_release {
     my %meta = %{ $self->zilla->distmeta() };
 
     $tag_url->path_segments( $tag_url->path_segments(),
-        join '-', @meta{qw(name version)} );
+        join q{-}, @meta{qw(name version)} );
     $self->log("Tagging $working_url as $tag_url");
 
     if ( my $commit_info = $self->_svn->commit( getcwd(), 0 ) ) {

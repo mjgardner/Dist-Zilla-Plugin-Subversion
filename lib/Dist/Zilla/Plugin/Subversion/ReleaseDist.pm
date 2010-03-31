@@ -10,6 +10,8 @@ use English qw(-no_match_vars);
 use MooseX::Types::URI 'Uri';
 use namespace::autoclean;
 
+=encoding utf8
+
 =attr dist_url
 
 URL for the directory receiving distribution tarballs.  Defaults to "dists"

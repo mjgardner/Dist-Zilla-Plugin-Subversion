@@ -1,11 +1,14 @@
 package Dist::Zilla::Plugin::Subversion;
 
 # ABSTRACT: update your Subversion repository after release
+## no critic (ProhibitLongLines)
 
 use Dist::Zilla;
 1;
 
 __END__
+
+=encoding utf8
 
 =head1 DESCRIPTION
 

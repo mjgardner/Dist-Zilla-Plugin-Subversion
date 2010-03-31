@@ -15,6 +15,8 @@ use SVN::Client;
 use SVN::Wc;
 use namespace::autoclean;
 
+=encoding utf8
+
 =attr svn_user
 
 Your Subversion user ID.  Defaults to the cached credentials for your
@@ -133,14 +135,13 @@ sub _make_notify_callback {
             = @ARG;
 
         $self->log(
-            join(
-                q{ }, '[SVN]',
-                grep {$ARG} (
-                    $_ACTION_NAME{$action},  $_STATE_NAME{$state},
-                    $_NODE_NAME{$node_kind}, $path,
-                    "r$revision_num",
-                ),
-            )
+            join q{ },
+            '[SVN]',
+            grep {$ARG} (
+                $_ACTION_NAME{$action},  $_STATE_NAME{$state},
+                $_NODE_NAME{$node_kind}, $path,
+                "r$revision_num",
+            ),
         );
         return;
     };
@@ -155,12 +156,14 @@ sub _codes_to_hash {
 }
 
 sub _log_commit_info {
-    my ( $self, $info, $message ) = @ARG;
+    my ( $self, $commit_info, $message ) = @ARG;
 
     $self->log(
-        join q{ }, $info->author(), $message, $info->revision(),
-        'on',      $info->date(),
+        join q{ }, $commit_info->author(),
+        $message,  $commit_info->revision(),
+        'on',      $commit_info->date(),
     );
+    return;
 }
 
 no Moose::Role;
