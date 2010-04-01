@@ -1,7 +1,9 @@
 Revision history for Dist-Zilla-Plugin-Subversion
 
 {{$NEXT}}
-
+    Many small changes for better Perl::Critic compliance.
+    Remove dependency on Modern::Perl.
+    Require Alien::SVN so that CPAN clients can install Subversion API.
 1.100900  2010-03-31 13:52:03 America/New_York
     Dist::Zilla 2 changes:
         Don't get Subversion username/password from global DZ config, as the
