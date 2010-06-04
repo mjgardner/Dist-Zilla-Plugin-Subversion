@@ -3,7 +3,7 @@ package Dist::Zilla::Role::Subversion;
 # ABSTRACT: does Subversion actions for a distribution
 
 use Moose::Role;
-with 'Dist::Zilla::Role::Plugin';
+with 'Dist::Zilla::Role::Plugin' => { -version => 4.101550 };
 
 use Cwd;
 use English qw(-no_match_vars);

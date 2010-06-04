@@ -3,7 +3,7 @@ package Dist::Zilla::Plugin::Subversion;
 # ABSTRACT: update your Subversion repository after release
 ## no critic (ProhibitLongLines)
 
-use Dist::Zilla;
+use Dist::Zilla 4.101550;
 1;
 
 __END__

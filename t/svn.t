@@ -1,7 +1,7 @@
 #!perl
 
 use Cwd;
-use Dist::Zilla;
+use Dist::Zilla 4.101550;
 use English qw(-no_match_vars);
 use File::Temp;
 use Modern::Perl;

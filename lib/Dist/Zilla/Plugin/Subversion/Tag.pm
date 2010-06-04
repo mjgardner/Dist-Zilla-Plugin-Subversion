@@ -4,7 +4,7 @@ package Dist::Zilla::Plugin::Subversion::Tag;
 
 use Moose;
 with 'Dist::Zilla::Role::Subversion';
-with 'Dist::Zilla::Role::AfterRelease';
+with 'Dist::Zilla::Role::AfterRelease' => { -version => 4.101550 };
 
 use Cwd;
 use English qw(-no_match_vars);
@@ -37,7 +37,7 @@ sub _build_tag_url {
 =method after_release
 
 Implemented for
-L<Dist::Zilla::Role::AfterRelease|Dist::Zilla::Role::AfterRelease> role.
+L<Dist::Zilla::Role::AfterRelease> role.
 Copies the working copy to a tag named after the distribution and its version.
 
 =cut
