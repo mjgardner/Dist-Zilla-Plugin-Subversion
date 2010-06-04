@@ -1,7 +1,9 @@
 Revision history for Dist-Zilla-Plugin-Subversion
 
 {{$NEXT}}
-
+    Updates for Dist::Zilla 4.
+    Recommend rather than require Alien::SVN for those who install Subversion
+    bindings some other way (e.g., OS package manager or from svn sources).
 1.100910  2010-04-01 11:45:12 America/New_York
     Many small changes for better Perl::Critic compliance.
     Remove dependency on Modern::Perl.
