@@ -7,6 +7,7 @@ with 'Dist::Zilla::Role::Subversion';
 with 'Dist::Zilla::Role::Releaser' => { -version => 4.101550 };
 
 use English qw(-no_match_vars);
+use Modern::Perl;
 use MooseX::Types::URI 'Uri';
 use namespace::autoclean;
 

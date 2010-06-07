@@ -8,6 +8,7 @@ with 'Dist::Zilla::Role::AfterRelease' => { -version => 4.101550 };
 
 use Cwd;
 use English qw(-no_match_vars);
+use Modern::Perl;
 use MooseX::Types::URI 'Uri';
 use namespace::autoclean;
 
