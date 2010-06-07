@@ -1,7 +1,7 @@
 #!perl
 
 use Cwd;
-use Dist::Zilla 4.101550;
+use Dist::Zilla::Tester 4.101550;
 use English qw(-no_match_vars);
 use File::Temp;
 use Modern::Perl;
@@ -47,7 +47,7 @@ name     = test
 author   = test user
 abstract = test release
 license  = BSD
-version  = 1.{$version}
+version  = 1.{$version || 0}
 copyright_holder = test holder
 
 {$repository_plugin}
@@ -69,9 +69,8 @@ $test_client->copy( "$repo_uri/trunk", 'HEAD',
     "$repo_uri/branches/test_branch" );
 $test_client->checkout( "$repo_uri/trunk", "$wc", 'HEAD', 1 );
 
-my $version = 0;
+my $version = 1;
 for my $branch (qw(trunk branches/test_branch)) {
-    $test_client->switch( "$wc", "$repo_uri/$branch", 'HEAD', 1 );
 
     my %plugin_test = (
         from_checkout => [],
@@ -82,52 +81,48 @@ for my $branch (qw(trunk branches/test_branch)) {
     eval { require Dist::Zilla::Plugin::Repository; 1 }
         and $plugin_test{repository} = [];
 
-    my $old_dir = getcwd();
-    chdir("$wc");
     while ( my ( $test_name, $plugins_ref ) = each %plugin_test ) {
-        my $ini_fh = file( "$wc", 'dist.ini' )->openw();
-        print $ini_fh $ini_template->fill_in(
+        my $zilla
+            = Dist::Zilla::Tester->from_config( { dist_root => "$wc" } );
+        $test_client->switch( $zilla->root->stringify(),
+            "$repo_uri/$branch", 'HEAD', 1 );
+
+        my $fh = $zilla->root->file('dist.ini')->openw();
+        print $fh $ini_template->fill_in(
             hash => {
                 ini_lines         => $plugins_ref,
                 version           => $version++,
                 repository_plugin => exists $plugin_test{repository}
                 ? '[Repository]'
                 : q{},
-            }
+            },
         );
-        close $ini_fh;
-        my $zilla = Dist::Zilla->from_config();
-        lives_ok( sub { $zilla->release() }, $test_name );
+        close $fh;
 
+        lives_ok( sub { $zilla->release() }, $test_name );
         my %meta = %{ $zilla->distmeta() };
         my $dist_name = join '-', @meta{qw(name version)};
 
         lives_and(
             sub {
-                ok( keys %{
-                        $test_client->ls( "$repo_uri/dists/$dist_name.tar.gz",
-                            'HEAD', 0 )
-                        },
-
+                isa_ok(
+                    $test_client->delete(
+                        "$repo_uri/dists/$dist_name.tar.gz", 0
+                    ),
+                    '_p_svn_client_commit_info_t',
+                    "$test_name released"
                 );
             },
-            "$test_name released"
         );
 
         lives_and(
             sub {
-                ok( keys %{
-                        $test_client->ls( "$repo_uri/tags/$dist_name", 'HEAD',
-                            0 )
-                        },
-                );
+                isa_ok(
+                    $test_client->delete( "$repo_uri/tags/$dist_name", 0 ),
+                    '_p_svn_client_commit_info_t', "$test_name tagged" );
             },
-            "$test_name tagged"
         );
-
     }
-    chdir $old_dir;
     $tests += 3 * keys %plugin_test;
 }
-
 done_testing($tests);
