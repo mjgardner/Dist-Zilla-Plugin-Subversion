@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Subversion
 
 {{$NEXT}}
+
+1.101580  2010-06-07 16:45:16 America/New_York
     Updates for Dist::Zilla 4.
     Recommend rather than require Alien::SVN for those who install Subversion
     bindings some other way (e.g., OS package manager or from svn sources).
