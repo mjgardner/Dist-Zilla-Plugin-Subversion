@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-Subversion
 
 {{$NEXT}}
+
+1.101590  2010-06-08 11:37:13 America/New_York
     Minor update to tighten up dist.ini and use DZ Git plugin for release.
 1.101580  2010-06-07 16:45:16 America/New_York
     Updates for Dist::Zilla 4.
