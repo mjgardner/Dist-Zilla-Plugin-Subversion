@@ -1,13 +1,16 @@
 package Dist::Zilla::Plugin::Subversion::ReleaseDist;
 
-use Moose;
-with 'Dist::Zilla::Role::Subversion';
-with 'Dist::Zilla::Role::Releaser' => { -version => 4.101550 };
-
-use English qw(-no_match_vars);
+use strict;
 use Modern::Perl;
+use utf8;
+
+# VERSION
+use English qw(-no_match_vars);
+use Moose;
 use MooseX::Types::URI 'Uri';
 use namespace::autoclean;
+with 'Dist::Zilla::Role::Subversion';
+with 'Dist::Zilla::Role::Releaser' => { -version => 4.101550 };
 
 has 'dist_url' => (
     is         => 'ro',

@@ -1,18 +1,21 @@
 package Dist::Zilla::Role::Subversion;
 
-use Moose::Role;
-with 'Dist::Zilla::Role::Plugin' => { -version => 4.101550 };
+use strict;
+use Modern::Perl;
+use utf8;
 
+# VERSION
 use Cwd;
 use English qw(-no_match_vars);
-use Modern::Perl;
-use MooseX::Types::URI 'Uri';
 use Path::Class qw(dir file);
 use Readonly;
 use Regexp::DefaultFlags;
 use SVN::Client;
 use SVN::Wc;
+use Moose::Role;
+use MooseX::Types::URI 'Uri';
 use namespace::autoclean;
+with 'Dist::Zilla::Role::Plugin' => { -version => 4.101550 };
 
 for my $attr (qw(svn_user svn_password)) {
     has $attr => (
@@ -108,7 +111,7 @@ Readonly my %_NODE_NAME   => _codes_to_hash('SVN::Node');
 sub _make_notify_callback {
     my $self = shift;
     return sub {
-        my ( $path, $action, $node_kind, $mime, $state, $revision_num )
+        my ( $path, $action, $node_kind, undef, $state, $revision_num )
             = @ARG;
 
         $self->log(
