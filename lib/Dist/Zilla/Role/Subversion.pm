@@ -5,19 +5,17 @@ use Modern::Perl;
 use utf8;
 
 our $VERSION = '1.101591';    # VERSION
-use Moose::Role;
-with 'Dist::Zilla::Role::Plugin' => { -version => 4.101550 };
-
 use Cwd;
 use English qw(-no_match_vars);
-use Modern::Perl;
-use MooseX::Types::URI 'Uri';
 use Path::Class qw(dir file);
 use Readonly;
 use Regexp::DefaultFlags;
 use SVN::Client;
 use SVN::Wc;
+use Moose::Role;
+use MooseX::Types::URI 'Uri';
 use namespace::autoclean;
+with 'Dist::Zilla::Role::Plugin' => { -version => 4.101550 };
 
 for my $attr (qw(svn_user svn_password)) {
     has $attr => (
