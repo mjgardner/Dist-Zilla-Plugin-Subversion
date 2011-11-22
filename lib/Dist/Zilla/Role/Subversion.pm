@@ -111,7 +111,7 @@ Readonly my %_NODE_NAME   => _codes_to_hash('SVN::Node');
 sub _make_notify_callback {
     my $self = shift;
     return sub {
-        my ( $path, $action, $node_kind, $mime, $state, $revision_num )
+        my ( $path, $action, $node_kind, undef, $state, $revision_num )
             = @ARG;
 
         $self->log(
