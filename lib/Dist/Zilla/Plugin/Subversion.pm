@@ -1,5 +1,6 @@
 package Dist::Zilla::Plugin::Subversion;
 
+use strict;
 use Modern::Perl;
 use utf8;
 
