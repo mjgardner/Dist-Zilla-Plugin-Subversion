@@ -1,5 +1,9 @@
 package Dist::Zilla::Role::Subversion;
 
+use Modern::Perl;
+use utf8;
+
+our $VERSION = '1.101591';    # VERSION
 use Moose::Role;
 with 'Dist::Zilla::Role::Plugin' => { -version => 4.101550 };
 
@@ -148,23 +152,144 @@ no Moose::Role;
 
 # ABSTRACT: does Subversion actions for a distribution
 
+__END__
+
+=pod
+
+=for :stopwords Mark Gardner cpan testmatrix url annocpan anno bugtracker rt cpants
+kwalitee diff irc mailto metadata placeholders
+
+=encoding utf8
+
+=head1 NAME
+
+Dist::Zilla::Role::Subversion - does Subversion actions for a distribution
+
+=head1 VERSION
+
+version 1.101591
+
 =head1 DESCRIPTION
 
 This role is used within the Subversion plugin to provide common attributes
 and defaults.
 
-=attr svn_user
+=head1 ATTRIBUTES
+
+=head2 svn_user
 
 Your Subversion user ID.  Defaults to the cached credentials for your
 distribution's working copy.
 
-=attr svn_password
+=head2 svn_password
 
 Your Subversion password.  Defaults to the cached credentials for your
 distribution's working copy.
 
-=attr working_url
+=head2 working_url
 
 URL for the directory currently holding your distribution.  Defaults to your
 distribution's repository location as stated in your C<META.yml> file, or
 the URL associated with the current working copy.
+
+=head1 SUPPORT
+
+=head2 Perldoc
+
+You can find documentation for this module with the perldoc command.
+
+  perldoc Dist::Zilla::Plugin::Subversion
+
+=head2 Websites
+
+The following websites have more information about this module, and may be of help to you. As always,
+in addition to those websites please use your favorite search engine to discover more resources.
+
+=over 4
+
+=item *
+
+Search CPAN
+
+The default CPAN search engine, useful to view POD in HTML format.
+
+L<http://search.cpan.org/dist/Dist-Zilla-Plugin-Subversion>
+
+=item *
+
+AnnoCPAN
+
+The AnnoCPAN is a website that allows community annonations of Perl module documentation.
+
+L<http://annocpan.org/dist/Dist-Zilla-Plugin-Subversion>
+
+=item *
+
+CPAN Ratings
+
+The CPAN Ratings is a website that allows community ratings and reviews of Perl modules.
+
+L<http://cpanratings.perl.org/d/Dist-Zilla-Plugin-Subversion>
+
+=item *
+
+CPANTS
+
+The CPANTS is a website that analyzes the Kwalitee ( code metrics ) of a distribution.
+
+L<http://cpants.perl.org/dist/overview/Dist-Zilla-Plugin-Subversion>
+
+=item *
+
+CPAN Testers
+
+The CPAN Testers is a network of smokers who run automated tests on uploaded CPAN distributions.
+
+L<http://www.cpantesters.org/distro/D/Dist-Zilla-Plugin-Subversion>
+
+=item *
+
+CPAN Testers Matrix
+
+The CPAN Testers Matrix is a website that provides a visual way to determine what Perls/platforms PASSed for a distribution.
+
+L<http://matrix.cpantesters.org/?dist=Dist-Zilla-Plugin-Subversion>
+
+=item *
+
+CPAN Testers Dependencies
+
+The CPAN Testers Dependencies is a website that shows a chart of the test results of all dependencies for a distribution.
+
+L<http://deps.cpantesters.org/?module=Dist::Zilla::Plugin::Subversion>
+
+=back
+
+=head2 Bugs / Feature Requests
+
+Please report any bugs or feature requests through the web
+interface at L<https://github.com/mjgardner/Dist-Zilla-Plugin-Subversion/issues>. You will be automatically notified of any
+progress on the request by the system.
+
+=head2 Source Code
+
+The code is open to the world, and available for you to hack on. Please feel free to browse it and play
+with it, or whatever. If you want to contribute patches, please send me a diff or prod me to pull
+from your repository :)
+
+L<https://github.com/mjgardner/Dist-Zilla-Plugin-Subversion>
+
+  git clone git://github.com/mjgardner/Dist-Zilla-Plugin-Subversion.git
+
+=head1 AUTHOR
+
+Mark Gardner <mjgardner@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2011 by Mark Gardner.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
