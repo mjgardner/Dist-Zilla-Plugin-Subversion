@@ -1,7 +1,5 @@
 package Dist::Zilla::Role::Subversion;
 
-# ABSTRACT: does Subversion actions for a distribution
-
 use Moose::Role;
 with 'Dist::Zilla::Role::Plugin' => { -version => 4.101550 };
 
@@ -16,20 +14,6 @@ use SVN::Client;
 use SVN::Wc;
 use namespace::autoclean;
 
-=encoding utf8
-
-=attr svn_user
-
-Your Subversion user ID.  Defaults to the cached credentials for your
-distribution's working copy.
-
-=attr svn_password
-
-Your Subversion password.  Defaults to the cached credentials for your
-distribution's working copy.
-
-=cut
-
 for my $attr (qw(svn_user svn_password)) {
     has $attr => (
         is        => 'ro',
@@ -37,14 +21,6 @@ for my $attr (qw(svn_user svn_password)) {
         predicate => "_has_$attr",
     );
 }
-
-=attr working_url
-
-URL for the directory currently holding your distribution.  Defaults to your
-distribution's repository location as stated in your C<META.yml> file, or
-the URL associated with the current working copy.
-
-=cut
 
 has 'working_url' => (
     is         => 'ro',
@@ -170,9 +146,25 @@ sub _log_commit_info {    ## no critic (ProhibitUnusedPrivateSubroutines)
 no Moose::Role;
 1;
 
-__END__
+# ABSTRACT: does Subversion actions for a distribution
 
 =head1 DESCRIPTION
 
 This role is used within the Subversion plugin to provide common attributes
 and defaults.
+
+=attr svn_user
+
+Your Subversion user ID.  Defaults to the cached credentials for your
+distribution's working copy.
+
+=attr svn_password
+
+Your Subversion password.  Defaults to the cached credentials for your
+distribution's working copy.
+
+=attr working_url
+
+URL for the directory currently holding your distribution.  Defaults to your
+distribution's repository location as stated in your C<META.yml> file, or
+the URL associated with the current working copy.

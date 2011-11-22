@@ -1,7 +1,5 @@
 package Dist::Zilla::Plugin::Subversion::Tag;
 
-# ABSTRACT: tags a distribution in Subversion
-
 use Moose;
 with 'Dist::Zilla::Role::Subversion';
 with 'Dist::Zilla::Role::AfterRelease' => { -version => 4.101550 };
@@ -11,16 +9,6 @@ use English qw(-no_match_vars);
 use Modern::Perl;
 use MooseX::Types::URI 'Uri';
 use namespace::autoclean;
-
-=encoding utf8
-
-=attr tag_url
-
-URL for the directory receiving tags for your distribution.  During release
-this will be appended with a directory named with your distribution's name
-and version number.
-
-=cut
 
 has 'tag_url' => (
     is         => 'ro',
@@ -34,14 +22,6 @@ sub _build_tag_url {    ## no critic (ProhibitUnusedPrivateSubroutines)
     $url->path_segments( $url->path_segments(), 'tags' );
     return $url;
 }
-
-=method after_release
-
-Implemented for
-L<Dist::Zilla::Role::AfterRelease> role.
-Copies the working copy to a tag named after the distribution and its version.
-
-=cut
 
 sub after_release {
     my $self = shift;
@@ -73,7 +53,7 @@ __PACKAGE__->meta->make_immutable();
 no Moose;
 1;
 
-__END__
+# ABSTRACT: tags a distribution in Subversion
 
 =head1 DESCRIPTION
 
@@ -82,3 +62,15 @@ distribution in Subversion.
 In addition to the attributes listed here, it can be configured with
 attributes from
 L<Dist::Zilla::Role::Subversion|Dist::Zilla::Role::Subversion>.
+
+=attr tag_url
+
+URL for the directory receiving tags for your distribution.  During release
+this will be appended with a directory named with your distribution's name
+and version number.
+
+=method after_release
+
+Implemented for
+L<Dist::Zilla::Role::AfterRelease|Dist::Zilla::Role::AfterRelease> role.
+Copies the working copy to a tag named after the distribution and its version.
