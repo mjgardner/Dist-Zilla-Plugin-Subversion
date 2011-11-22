@@ -53,7 +53,7 @@ has 'working_url' => (
     lazy_build => 1,
 );
 
-sub _build_working_url {
+sub _build_working_url {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $self = shift;
     my $url;
     if ( $url = $self->zilla->distmeta->{resources}{repository} ) {
@@ -71,7 +71,7 @@ has '_base_url' => (
     lazy_build => 1,
 );
 
-sub _build__base_url {
+sub _build__base_url {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $self = shift;
 
     my $url        = $self->working_url->clone();
@@ -97,7 +97,7 @@ has '_svn' => (
     lazy_build => 1,
 );
 
-sub _build__svn {
+sub _build__svn {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $self = shift;
 ## no critic (ProhibitCallsToUnexportedSubs)
 
@@ -112,7 +112,7 @@ sub _build__svn {
                     $ARG[0]->$attr( $self->$attr );
                 }
             },
-            0
+            0,
         );
     }
 
@@ -150,13 +150,13 @@ sub _make_notify_callback {
 
 sub _codes_to_hash {
     my $package = (shift) . q{::};
-    no strict 'refs';
+    no strict 'refs';    ## no critic (ProhibitNoStrict)
     return map { ${ ${$package}{$ARG} } => $ARG }
         grep { ${ ${$package}{$ARG} } }
         keys %{$package};
 }
 
-sub _log_commit_info {
+sub _log_commit_info {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my ( $self, $commit_info, $message ) = @ARG;
 
     $self->log(

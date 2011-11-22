@@ -29,7 +29,7 @@ has 'tag_url' => (
     lazy_build => 1,
 );
 
-sub _build_tag_url {
+sub _build_tag_url {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $url = $ARG[0]->_base_url();
     $url->path_segments( $url->path_segments(), 'tags' );
     return $url;

@@ -28,7 +28,7 @@ has 'dist_url' => (
     lazy_build => 1,
 );
 
-sub _build_dist_url {
+sub _build_dist_url {    ## no critic (ProhibitUnusedPrivateSubroutines)
     my $url = $ARG[0]->_base_url->clone();
     $url->path_segments( $url->path_segments(), 'dists' );
     return $url;
