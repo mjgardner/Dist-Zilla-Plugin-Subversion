@@ -33,8 +33,8 @@ sub after_release {
         = map { $self->$ARG } qw(working_url tag_url);
     my %meta = %{ $self->zilla->distmeta() };
 
-    $tag_url->path_segments( $tag_url->path_segments(),
-        join q{-}, @meta{qw(name version)} );
+    my @segments = $tag_url->path_segments();
+    $tag_url->path_segments( @segments, join q{-}, @meta{qw(name version)} );
     $self->log("Tagging $working_url as $tag_url");
 
     if ( my $commit_info = $self->_svn->commit( getcwd(), 0 ) ) {
