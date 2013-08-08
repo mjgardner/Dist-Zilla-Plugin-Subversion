@@ -61,6 +61,7 @@ my %WriteMakefileArgs = (
 );
 
 
+<<<<<<< HEAD
 unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
   my $tr = delete $WriteMakefileArgs{TEST_REQUIRES};
   my $br = $WriteMakefileArgs{BUILD_REQUIRES};
@@ -74,6 +75,8 @@ unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {
   }
 }
 
+=======
+>>>>>>> 8fddaff4935e9d00da73fb24fce4ef077f643952
 unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
   my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
   my $pp = $WriteMakefileArgs{PREREQ_PM};
